@@ -6,36 +6,55 @@ package poeparttwo;
 
 import java.util.Scanner;
 
-/**
- *
- * @author Student
- */
 public class PoePartTwo {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        // TODO code application logic here
-        Message msg = new Message();
         Scanner scan = new Scanner(System.in);
+        Login userLogin = new Login();
+
+        // 1. Part 1 Registration Section
+        System.out.println("===== REGISTER =====");
+        System.out.print("Please enter first name: ");
+        userLogin.firstName = scan.nextLine();
         
-        int option;
-        do{
-        System.out.println("\n===== Select any of the option below =====");
-         System.out.println("1. Send message");
-          System.out.println("2. Coming soon");
-           System.out.println("3. Exit");
-           
-           option = scan.nextInt();
-           
-           switch(option){
-                   case 1 -> msg.sendingMessages();
-                   case 2 -> System.out.println("Coming soon");
-                   case 3 -> System.out.println("Good bye!!");
-                   default -> System.out.println("Invalid option!!");
-           }
-        }while(option != 3);
+        System.out.print("Please enter last name: ");
+        userLogin.lastName = scan.nextLine();
         
-         }
+        System.out.print("Please enter username: ");
+        String username = scan.nextLine();
+        
+        System.out.print("Please enter password: ");
+        String password = scan.nextLine();
+        
+        System.out.print("Please enter cellphone number: ");
+        String cellphone = scan.nextLine();
+
+        
+        System.out.println("\n" + userLogin.registerUser(username, password, cellphone));
+
+       
+        if (!userLogin.registerStatus(username, password, cellphone)) {
+            System.out.println("Registration failed. Exiting application.");
+            return; 
+        }
+
+        
+        System.out.println("\n===== LOGIN =====");
+        System.out.print("Enter username: ");
+        String loginUser = scan.nextLine();
+        
+        System.out.print("Enter password: ");
+        String loginPass = scan.nextLine();
+
+        boolean loginSuccess = userLogin.loginUser(loginUser, loginPass);
+        System.out.println(userLogin.returnLoginStatus(loginSuccess));
+
+        
+        if (loginSuccess) {
+            System.out.println("\n========================================");
+            System.out.println("Welcome to EasyKanban.");
+            System.out.println("========================================");
+           
+        }
     }
+}
